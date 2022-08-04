@@ -1,18 +1,36 @@
 import json
 import logging
 
+import telebot as telebot
+from flask import Flask, request
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
-
 from main import get_games, get_ids, post_inf
 import os
 from aiogram.dispatcher.filters import Text
 
 
+BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
+bot2 = telebot.Telebot(BOT_TOKEN)
+APP_URL = os.getenv("APP_URL")
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
-bot = Bot(token=str(os.getenv("BOT_TOKEN")))
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
+server = Flask(__name__)
+
+
+@server.route('/' + BOT_TOKEN, methods=['POST'])
+def get_message():
+    json_string = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_string)
+    bot2.process_new_updates([update])
+    return '!', 200
+
+@server.route('/')
+def webhook():
+    bot2.remove_webhook()
+    bot2.set_webhook(url=APP_URL)
 
 
 @dp.message_handler(commands='start')
@@ -65,15 +83,7 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    start_webhook(
-        dispatcher=dp,
-        webhook_path=WEBHOOK_PATH,
-        skip_updates=True,
-        on_startup=on_startup,
-        on_shutdown=on_shutdown,
-        host=WEBAPP_HOST,
-        port=WEBAPP_PORT,
-    )
+    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    main()
 
 
