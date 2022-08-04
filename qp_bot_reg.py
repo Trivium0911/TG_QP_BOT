@@ -8,7 +8,7 @@ from aiogram.dispatcher.filters import Text
 
 
 BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
-bot2 = telebot.Telebot(BOT_TOKEN)
+bot2 = telebot.TeleBot(BOT_TOKEN)
 APP_URL = os.getenv("APP_URL")
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
