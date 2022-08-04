@@ -1,9 +1,7 @@
 import json
-import logging
 import telebot as telebot
 from flask import Flask, request
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.utils.executor import start_webhook
 from main import get_games, get_ids, post_inf
 import os
 from aiogram.dispatcher.filters import Text
