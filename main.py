@@ -3,6 +3,8 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import os
+import lxml
+
 
 
 headers = {
@@ -35,10 +37,14 @@ def get_actual_games(url):
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.text for x in soup.find_all('div', class_='schedule-column') \
            if all([i not in x.text.lower() for i in stop_list])]
-
+    res = ['Актуальные игры:  \n']
+    for i in lst:
+        lst_res = i.replace('\n', ' ').split('  ')
+        res.append(f"{lst_res[1].strip()}, {lst_res[2].strip()}, {lst_res[6].strip()} \n")
+        time.sleep(1)
     with open('games.txt', 'w', encoding='utf-8-sig') as file:
-        file.writelines(lst)
-    return lst
+        file.writelines(res)
+    return res
 
 
 def post_inf(url, lst):

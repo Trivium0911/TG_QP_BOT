@@ -47,31 +47,26 @@ async def get_games(message: types.Message):
 
     get_actual_games(URL)
 
-    res = ['Актуальные игры:  \n']
     with open('games.txt', 'r', encoding='utf-8-sig') as file:
         for line in file:
-            lst_res = line.replace('\n', ' ').split('  ')
-            res.append(f"{lst_res[1].strip()}, {lst_res[2].strip()}, {lst_res[6].strip()} \n")
-        for strin in res:
-            await message.answer(strin)
+            await message.answer(line)
 
 
 @dp.message_handler(Text(equals='Регистрация на всё'))
-async def reg_games(message: types.Message):
+async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
     lst = get_ids(url=URL)
-
     post_inf(url=URL_POST, lst=lst)
 
     with open('reginfo.json', 'r') as file:
         load = json.load(file)
         for line in load:
             await message.answer(f"Успех: {line['success']} \n"
-                                 f"{line['successMsg'].replace('<br>', ' ')}")
+                                 f"{line['successMsg'].replace('<br>', '')}")
 
 
-@dp.message_handler(Text(equals='Назад'))
+@dp.message_handler(Text(equals='Сначала'))
 async def start_again(message: types.Message):
     await message.answer('Ну что, косяк, пора бы тебе напомнить про регистрацию на игры')
     start_buttons = ['Текущие игры КП', 'Регистрация на всё', 'Сначала']
@@ -83,12 +78,12 @@ async def start_again(message: types.Message):
 
 def main():
     executor.start_polling(dp)
-
+    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 
 if __name__ == '__main__':
+
     main()
-    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 
 
