@@ -1,35 +1,40 @@
 import json
-import telebot as telebot
-from flask import Flask, request
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.utils.executor import start_webhook
+
 from main import get_actual_games, get_ids, post_inf
 import os
 from aiogram.dispatcher.filters import Text
+import logging
 
 
 BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
-bot2 = telebot.TeleBot(BOT_TOKEN)
 APP_URL = os.getenv("APP_URL")
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
+
+HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
+
+# webhook settings
+WEBHOOK_HOST = f'https://{HEROKU_APP_NAME}.herokuapp.com'
+WEBHOOK_PATH = f'/webhook/{BOT_TOKEN}'
+WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
+
+# webserver settings
+WEBAPP_HOST = '0.0.0.0'
+WEBAPP_PORT = os.getenv('PORT', default=8000)
+
+
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
-server = Flask(__name__)
 
 
-@server.route('/' + BOT_TOKEN, methods=['POST'])
-def get_message():
-    json_string = request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot2.process_new_updates([update])
-    return '!', 200
+async def on_startup(dispatcher):
+    await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
 
 
-@server.route('/')
-def webhook():
-    bot2.remove_webhook()
-    bot2.set_webhook(url=APP_URL)
-
+async def on_shutdown(dispatcher):
+    await bot.delete_webhook()
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
@@ -77,8 +82,17 @@ async def start_again(message: types.Message):
 
 
 def main():
-    executor.start_polling(dp)
-    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    executor.start_polling(dp, skip_updates=True)
+    logging.basicConfig(level=logging.INFO)
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        skip_updates=True,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )
 
 
 if __name__ == '__main__':
