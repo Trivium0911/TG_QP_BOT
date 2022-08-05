@@ -90,8 +90,8 @@ async def make_form(message: types.Message):
     get_actual_games(URL)
 
     with open('games.txt', 'r', encoding='utf-8-sig') as file:
-        for line in file:
-            res += pre + line + nums
+        for line in file[1:]:
+            res += pre + f"{line.strip()}:\n" + nums
 
     await message.answer(res)
 
