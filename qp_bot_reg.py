@@ -42,7 +42,7 @@ async def on_shutdown(dispatcher):
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     await message.answer('Ну что, косяк, пора бы тебе напомнить про регистрацию на игры')
-    start_buttons = ['Текущие игры Квиз Плиз', 'Регистрация на все игры', 'Всё херня, давай по-новой', 'Сформировать шаблон']
+    start_buttons = ['Текущие игры Квиз Плиз', 'Регистрация на все игры', 'Сформировать шаблон']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_buttons)
 
