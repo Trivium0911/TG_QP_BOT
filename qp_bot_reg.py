@@ -38,7 +38,7 @@ async def on_shutdown(dispatcher):
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     await message.answer('Ну что, косяк, пора бы тебе напомнить про регистрацию на игры')
-    start_buttons = ['Текущие игры КП', 'Регистрация на всё', 'Сначала']
+    start_buttons = ['Текущие игры КП', 'Регистрация на всё', 'Сначала', 'Сформировать шаблон']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_buttons)
 
@@ -78,6 +78,22 @@ async def start_again(message: types.Message):
     keyboard.add(*start_buttons)
 
     await message.answer('Что ж, погнали!', reply_markup=keyboard)
+
+
+@dp.message_handler(Text(equals='Сформировать шаблон'))
+async def make_form(message: types.Message):
+    await message.answer('Шаблон')
+    res = ''
+    pre = '\nСостав на игру '
+    nums = '\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n\n\n'
+
+    get_actual_games(URL)
+
+    with open('games.txt', 'r', encoding='utf-8-sig') as file:
+        for line in file:
+            res += pre + line + nums
+
+    await message.answer(res)
 
 
 def main():
