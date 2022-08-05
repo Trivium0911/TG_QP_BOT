@@ -96,6 +96,7 @@ async def make_form(message: types.Message):
             res += pre + f"{line.strip()}:\n" + nums
 
     await message.answer(res)
+    res = ''
 
 
 def main():
