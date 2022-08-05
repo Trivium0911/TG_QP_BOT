@@ -3,8 +3,6 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import os
-import lxml
-
 
 
 headers = {
@@ -46,7 +44,6 @@ def get_actual_games(url):
         file.writelines(res)
 
 
-
 def post_inf(url, lst):
     res = []
     for i in lst:
@@ -72,7 +69,6 @@ def post_inf(url, lst):
         res.append(response.json())
     with open('reginfo.json', 'w') as file:
         json.dump(res, file, indent=4, ensure_ascii=False)
-
 
 
 def main():

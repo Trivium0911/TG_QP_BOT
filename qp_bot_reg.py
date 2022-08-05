@@ -1,11 +1,10 @@
-import json
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.utils.executor import start_webhook
 from main import get_actual_games, get_ids, post_inf
-import os
+from aiogram.utils.executor import start_webhook
 from aiogram.dispatcher.filters import Text
+from aiogram import Bot, Dispatcher, types
 import logging
-
+import json
+import os
 
 BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
 APP_URL = os.getenv("APP_URL")
@@ -34,6 +33,7 @@ async def on_startup(dispatcher):
 
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
+
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
@@ -81,7 +81,7 @@ async def start_again(message: types.Message):
 
 
 def main():
-    #executor.start_polling(dp, skip_updates=True)
+
     logging.basicConfig(level=logging.INFO)
     start_webhook(
         dispatcher=dp,
