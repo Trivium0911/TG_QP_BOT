@@ -30,18 +30,15 @@ def get_page(url):
     return response
 
 
-def get_games(url):
+def get_actual_games(url):
     response = get_page(url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.text for x in soup.find_all('div', class_='schedule-column') \
            if all([i not in x.text.lower() for i in stop_list])]
 
-    return lst
-
-
     with open('games.txt', 'w', encoding='utf-8-sig') as file:
-        file.writelines(res)
-    return res
+        file.writelines(lst)
+    return lst
 
 
 def post_inf(url, lst):
