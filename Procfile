@@ -1,1 +1,1 @@
-app: qp_bot_reg.py
+web: python qp_bot_reg.py
