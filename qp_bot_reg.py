@@ -67,7 +67,7 @@ async def get_games(message: types.Message):
         load = json.load(file)
         for line in load:
             await message.answer(f"Успех: {line['success']} \n"
-                                 f"{line['successMsg'].replace('<br>', '')}")
+                                 f"{line['successMsg'].replace('<br>', ' ')}")
 
 
 @dp.message_handler(Text(equals='Сначала'))
