@@ -1,1 +1,1 @@
-web: python qp_bot_reg.py runserver 0.0.0.0:$PORT
+web: python qp_bot_reg.py
