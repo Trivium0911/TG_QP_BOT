@@ -44,7 +44,8 @@ async def start(message: types.Message):
 async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
-    get_games(URL)
+    await get_games(URL)
+
     res = ['Актуальные игры:  \n']
     with open('games.txt', 'r', encoding='utf-8-sig') as file:
         for line in file:
