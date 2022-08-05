@@ -39,7 +39,7 @@ def get_actual_games(url):
            if all([i not in x.text.lower() for i in stop_list])]
     res = ['Актуальные игры:  \n']
     for i in lst:
-        lst_res = i.replace('\n', ' ').split('  ')
+        lst_res = i.replace('\n', ' ').split(' ')
         res.append(f"{lst_res[1].strip()}, {lst_res[2].strip()}, {lst_res[6].strip()} \n")
         time.sleep(1)
     with open('games.txt', 'w', encoding='utf-8-sig') as file:
