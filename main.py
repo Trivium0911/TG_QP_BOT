@@ -70,7 +70,7 @@ def post_inf(url, lst):
 
 
 def main():
-    games = get_games(url=URL)
+    games = get_actual_games(url=URL)
     games_ids = get_ids(url=URL)
     post_inf(url=URL_POST, lst=games_ids)
 
