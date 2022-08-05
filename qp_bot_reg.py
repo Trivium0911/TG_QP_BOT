@@ -85,7 +85,7 @@ async def make_form(message: types.Message):
     await message.answer('Шаблон')
     res = ''
     pre = '\nСостав на игру '
-    nums = '\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n\n\n'
+    nums = '\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n\n'
 
     get_actual_games(URL)
 
