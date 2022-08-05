@@ -2,7 +2,7 @@ import json
 import telebot as telebot
 from flask import Flask, request
 from aiogram import Bot, Dispatcher, executor, types
-from main import get_games, get_ids, post_inf
+from main import get_actual_games, get_ids, post_inf
 import os
 from aiogram.dispatcher.filters import Text
 
