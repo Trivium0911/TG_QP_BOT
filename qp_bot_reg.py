@@ -38,14 +38,14 @@ async def on_shutdown(dispatcher):
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     await message.answer('Ну что, косяк, пора бы тебе напомнить про регистрацию на игры')
-    start_buttons = ['Текущие игры КП', 'Регистрация на всё', 'Сначала', 'Сформировать шаблон']
+    start_buttons = ['Текущие игры Квиз Плиз', 'Регистрация на все игры', 'Всё херня, давай по-новой', 'Сформировать шаблон']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_buttons)
 
     await message.answer('Что ж, погнали!', reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals='Текущие игры КП'))
+@dp.message_handler(Text(equals='Текущие игры Квиз Плиз'))
 async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
@@ -56,7 +56,7 @@ async def get_games(message: types.Message):
             await message.answer(line)
 
 
-@dp.message_handler(Text(equals='Регистрация на всё'))
+@dp.message_handler(Text(equals='Регистрация на все игры'))
 async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
@@ -70,7 +70,7 @@ async def get_games(message: types.Message):
                                  f"{line['successMsg'].replace('<br>', ' ')}")
 
 
-@dp.message_handler(Text(equals='Сначала'))
+@dp.message_handler(Text(equals='Всё херня, давай по-новой'))
 async def start_again(message: types.Message):
     await message.answer('Ну что, косяк, пора бы тебе напомнить про регистрацию на игры')
     start_buttons = ['Текущие игры КП', 'Регистрация на всё', 'Сначала']
