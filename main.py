@@ -44,7 +44,7 @@ def get_actual_games(url):
         time.sleep(1)
     with open('games.txt', 'w', encoding='utf-8-sig') as file:
         file.writelines(res)
-    return res
+
 
 
 def post_inf(url, lst):
@@ -72,7 +72,7 @@ def post_inf(url, lst):
         res.append(response.json())
     with open('reginfo.json', 'w') as file:
         json.dump(res, file, indent=4, ensure_ascii=False)
-    return res
+
 
 
 def main():
