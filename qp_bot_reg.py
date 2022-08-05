@@ -3,6 +3,7 @@ from aiogram.utils.executor import start_webhook
 from aiogram.dispatcher.filters import Text
 from aiogram import Bot, Dispatcher, types
 import logging
+import aiogram
 import json
 import os
 
@@ -29,6 +30,9 @@ dp = Dispatcher(bot)
 
 async def on_startup(dispatcher):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+    await bot.set_my_commands([
+        aiogram.types.BotCommand("start", "it is start command..."),
+    ])
 
 
 async def on_shutdown(dispatcher):
