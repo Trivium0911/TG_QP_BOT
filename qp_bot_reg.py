@@ -28,7 +28,7 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 
-async def on_startup(dispatcher, message):
+async def on_startup(dispatcher, message: types.Message):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
     await message.answer("Press Menu -> /start to... start")
     await bot.set_my_commands([
