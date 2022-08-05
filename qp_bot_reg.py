@@ -45,17 +45,21 @@ async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
     get_games(URL)
-
+    res = ['Актуальные игры:  \n']
     with open('games.txt', 'r', encoding='utf-8-sig') as file:
         for line in file:
-            await message.answer(line)
+            lst_res = line.replace('\n', ' ').split('  ')
+            res.append(f"{lst_res[1].strip()}, {lst_res[2].strip()}, {lst_res[6].strip()} \n")
+        for strin in res:
+            await message.answer(strin)
 
 
 @dp.message_handler(Text(equals='Регистрация на всё'))
-async def get_games(message: types.Message):
+async def reg_games(message: types.Message):
     await message.answer('Please wait...')
 
     lst = get_ids(url=URL)
+
     post_inf(url=URL_POST, lst=lst)
 
     with open('reginfo.json', 'r') as file:
@@ -78,6 +82,7 @@ async def start_again(message: types.Message):
 def main():
     executor.start_polling(dp)
     server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
 
 if __name__ == '__main__':
     main()
