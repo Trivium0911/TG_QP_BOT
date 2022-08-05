@@ -28,9 +28,8 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 
-async def on_startup(dispatcher, message: types.Message):
+async def on_startup(dispatcher):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
-    await message.answer("Press Menu -> /start to... start")
     await bot.set_my_commands([
         aiogram.types.BotCommand("start", "it is start command..."),
     ])
