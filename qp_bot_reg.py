@@ -1,7 +1,6 @@
 import json
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
-
 from main import get_actual_games, get_ids, post_inf
 import os
 from aiogram.dispatcher.filters import Text
@@ -82,7 +81,7 @@ async def start_again(message: types.Message):
 
 
 def main():
-    executor.start_polling(dp, skip_updates=True)
+    #executor.start_polling(dp, skip_updates=True)
     logging.basicConfig(level=logging.INFO)
     start_webhook(
         dispatcher=dp,
@@ -96,7 +95,6 @@ def main():
 
 
 if __name__ == '__main__':
-
     main()
 
 
