@@ -77,7 +77,7 @@ async def get_games(message: types.Message):
 @dp.message_handler(Text(equals='Сформировать шаблон'))
 async def make_form(message: types.Message):
     await message.answer('Шаблон')
-    res = ''
+    res = '\n'
     pre = '\nСостав на игру '
     nums = '\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n\n'
 
