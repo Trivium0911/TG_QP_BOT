@@ -13,11 +13,11 @@ headers = {
 
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
-stop_list = ["новички", 'полуфинал', 'финал', 'открытия сезона игр']
+stop_list = ["новички", 'полуфинал', 'финал', 'сезона игр']
 
 
 def get_ids(url):
-    response = get_page(url)
+    response = get_page(url=url, headers=headers)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.attrs['id'] for x in soup.find_all('div',
                                                 class_='schedule-column')
