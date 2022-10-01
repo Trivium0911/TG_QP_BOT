@@ -4,22 +4,23 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
-
 headers = {
-        "accept": '*/*',#"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "user-agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-        'x-client-data': 'CIq2yQEIo7bJAQjBtskBCKmdygEIlKHLAQiLq8wBCP+7zAEI2LzMAQiywcwBCMTBzAEI18HMAQ=='
-          }
+    "accept": '*/*',
+    # "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "user-agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    'x-client-data': 'CIq2yQEIo7bJAQjBtskBCKmdygEIlKHLAQiLq8wBCP+7zAEI2LzMAQiywcwBCMTBzAEI18HMAQ=='
+}
 
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
-stop_list = ["новички", 'полуфинал', 'финал']
+stop_list = ["новички", 'полуфинал', 'финал', 'открытия сезона игр']
 
 
 def get_ids(url):
     response = get_page(url)
     soup = BeautifulSoup(response.text, 'lxml')
-    lst = [x.attrs['id'] for x in soup.find_all('div', class_='schedule-column') \
+    lst = [x.attrs['id'] for x in soup.find_all('div',
+                                                class_='schedule-column')
            if all([i not in x.text.lower() for i in stop_list])]
     return lst
 
