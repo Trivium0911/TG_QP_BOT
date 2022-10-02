@@ -17,7 +17,7 @@ stop_list = ["новички", 'полуфинал', 'финал', 'сезона
 
 
 def get_ids(url):
-    response = get_page(url=url, headers=headers)
+    response = get_page(url=url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.attrs['id'] for x in soup.find_all('div',
                                                 class_='schedule-column')
