@@ -3,6 +3,8 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import os
+from requests.adapters import HTTPAdapter
+from urllib3 import Retry
 
 headers = {
     "accept": '*/*',
@@ -26,9 +28,14 @@ def get_ids(url):
 
 
 def get_page(url):
-    response = requests.get(url=URL)
-    response.encoding = 'utf-8-sig'
-    return response
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    session.get(url)
+    return session
 
 
 def get_actual_games(url):
