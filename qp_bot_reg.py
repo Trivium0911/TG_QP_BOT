@@ -23,7 +23,6 @@ WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=8000)
 
-
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
@@ -94,12 +93,11 @@ async def make_form(message: types.Message):
 
 
 def main():
-
     logging.basicConfig(level=logging.INFO)
     start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
-        skip_updates=True,
+        skip_updates=False,
         on_startup=on_startup,
         on_shutdown=on_shutdown,
         host=WEBAPP_HOST,
@@ -109,5 +107,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
