@@ -23,7 +23,7 @@ WEBHOOK_PATH = f''
 WEBHOOK_URL = f'https://8aaa-46-56-247-37.ngrok.io'
 
 # webserver settings
-WEBAPP_HOST = '127.0.0.1'
+WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=5000)
 
 bot = Bot(token=BOT_TOKEN)
