@@ -34,7 +34,7 @@ def get_page(url):
 def get_actual_games(url):
     response = get_page(url)
     soup = BeautifulSoup(response.text, 'lxml')
-    lst = [x.text for x in soup.find_all('div', class_='schedule-column') \
+    lst = [x.text for x in soup.find_all('div', class_='schedule-column')
            if all([i not in x.text.lower() for i in stop_list])]
     res = ['Актуальные игры:  \n']
     for i in lst:
