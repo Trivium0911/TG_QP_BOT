@@ -68,7 +68,7 @@ async def get_games(message: types.Message):
 
 
 @dp.message_handler(Text(equals='Регистрация на все игры'))
-async def reg_games(message: types.Message):
+async def get_games(message: types.Message):
     await message.answer('Please wait...')
 
     lst = get_ids(url=URL)
