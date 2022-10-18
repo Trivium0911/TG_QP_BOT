@@ -38,6 +38,7 @@ def get_actual_games(url):
         time.sleep(1)
     with open('games.txt', 'w', encoding='utf-8-sig') as file:
         file.writelines(res)
+    return
 
 
 def post_inf(url, lst):
