@@ -15,7 +15,7 @@ APP_URL = os.getenv("APP_URL")
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
 
-APP_NAME = os.getenv('HEROKU_APP_NAME')
+APP_NAME = os.getenv('APP_NAME')
 
 # webhook settings
 WEBHOOK_HOST = f'https://{APP_NAME}.onrender.com'
