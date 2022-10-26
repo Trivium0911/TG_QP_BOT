@@ -1,16 +1,22 @@
+from dataclasses import dataclass
 import json
 import time
 from bs4 import BeautifulSoup
 import requests
 import os
 
-
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
 stop_list = ["новички", 'полуфинал', 'финал', 'сезона игр']
 
 
-def get_ids(url):
+@dataclass
+class Data:
+    url = str
+    lst = list
+
+
+def get_ids(url: Data):
     response = get_page(url=url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.attrs['id'] for x in soup.find_all('div',
@@ -19,13 +25,13 @@ def get_ids(url):
     return lst
 
 
-def get_page(url):
+def get_page(url: Data):
     response = requests.get(url=URL)
     response.encoding = 'utf-8-sig'
     return response
 
 
-def get_actual_games(url):
+def get_actual_games(url: Data):
     response = get_page(url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.text for x in soup.find_all('div', class_='schedule-column')
@@ -41,7 +47,7 @@ def get_actual_games(url):
     return
 
 
-def post_inf(url, lst):
+def post_inf(url: Data, lst: Data):
     res = []
     for i in lst:
         dct = {
