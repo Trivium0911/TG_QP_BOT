@@ -40,6 +40,7 @@ dp = Dispatcher(bot=bot, storage=MemoryStorage())
 
 
 async def on_startup(dispatcher):
+    await start_db()
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
     await bot.set_my_commands([
         aiogram.types.BotCommand("start", "it is start command..."),
