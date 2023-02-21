@@ -59,28 +59,25 @@ async def on_shutdown(dispatcher):
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     user_id = message.from_user.id
-    match str(user_id) in users_id_list:
-        case False:
-            await message.answer('В доступе отказано')
-        case True:
-            match check_user(user_id=message.from_user.id):
-                case None:
-                    await message.answer("Это твой первый визит. "
-                                         "Давай-ка зарегистрируемся",
-                                         reply_markup=get_register_kb())
-                case _:
-                    await message.answer('Welcome to the club, buddy')
-                    await message.answer('Что ж, погнали!',
-                                         reply_markup=get_main_kb())
+    if not (str(user_id) in users_id_list):
+        await message.answer('В доступе отказано')
+    else:
+        if not(check_user(user_id=message.from_user.id)):
+            await message.answer("Это твой первый визит. "
+                                 "Давай-ка зарегистрируемся",
+                                 reply_markup=get_register_kb())
+        else:
+            await message.answer('Welcome to the club, buddy')
+            await message.answer('Что ж, погнали!',
+                                 reply_markup=get_main_kb())
 
 
 @dp.message_handler(Text(equals="Отмена"), commands='Отмена')
 @dp.message_handler(Text(equals='Отмена', ignore_case=True), state='*')
 async def cansel_func(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
-    match current_state:
-        case None:
-            return
+    if not current_state:
+        return
     await state.finish()
     await message.answer("Запустите бота заново")
     await message.delete()
