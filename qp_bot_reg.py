@@ -58,7 +58,7 @@ async def on_shutdown(dispatcher):
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
-    match message.from_user.id in users_id_list:
+    match str(message.from_user.id) in users_id_list:
         case False:
             await message.answer('В доступе отказано')
         case True:
@@ -98,7 +98,7 @@ async def make_registration(message: types.Message) -> None:
 @dp.message_handler(state=RegisterStatesGroup.command_name)
 async def get_name(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
-        data["name"] = message.text
+        data["command_name"] = message.text
     await RegisterStatesGroup.next()
     await message.reply("Пожалуйста, введите имя капитана:",
                         reply_markup=get_cancel_kb())
