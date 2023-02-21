@@ -16,7 +16,7 @@ class Data:
     lst = list
 
 
-def get_ids(url: Data):
+def get_ids(url: Data) -> list:
     response = get_page(url=url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.attrs['id'] for x in soup.find_all('div',
@@ -25,13 +25,13 @@ def get_ids(url: Data):
     return lst
 
 
-def get_page(url: Data):
+def get_page(url: Data) -> requests.get:
     response = requests.get(url=URL)
     response.encoding = 'utf-8-sig'
     return response
 
 
-def get_actual_games(url: Data):
+def get_actual_games(url: Data) -> None:
     response = get_page(url)
     soup = BeautifulSoup(response.text, 'lxml')
     lst = [x.text for x in soup.find_all('div', class_='schedule-column')
@@ -47,14 +47,14 @@ def get_actual_games(url: Data):
     return
 
 
-def post_inf(url: Data, lst: Data):
+def post_inf(url: str, lst: list, user_info: list) -> None:
     res = []
     for i in lst:
         dct = {
-            'QpRecord[teamName]': os.getenv('TEAM'),
-            'QpRecord[captainName]': os.getenv('CAPTAIN'),
-            'QpRecord[email]': os.getenv('EMAIL'),
-            'QpRecord[phone]': os.getenv('PHONE'),
+            'QpRecord[teamName]': user_info[0],
+            'QpRecord[captainName]': user_info[1],
+            'QpRecord[email]': user_info[2],
+            'QpRecord[phone]': user_info[3],
             'QpRecord[count]': '9',
             'QpRecord[custom_fields_values]': '[]',
             'QpRecord[comment]': '',
