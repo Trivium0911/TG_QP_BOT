@@ -58,7 +58,7 @@ async def on_shutdown(dispatcher):
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
-    match str(message.from_user.id) in users_id_list:
+    match message.from_user.id in users_id_list:
         case False:
             await message.answer('В доступе отказано')
         case True:
