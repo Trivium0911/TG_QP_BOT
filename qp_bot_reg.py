@@ -19,10 +19,10 @@ APP_URL = os.getenv("APP_URL")
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
 users_id_list = [
-    os.getenv('OWNER'),
-    os.getenv('GUEST_1'),
-    os.getenv('GUEST_2'),
-    os.getenv("GUEST_3")
+    str(os.getenv('OWNER')),
+    str(os.getenv('GUEST_1')),
+    str(os.getenv('GUEST_2')),
+    str(os.getenv("GUEST_3")),
 ]
 APP_NAME = os.getenv('APP_NAME')
 
@@ -58,7 +58,8 @@ async def on_shutdown(dispatcher):
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
-    match str(message.from_user.id) in users_id_list:
+    user_id = message.from_user.id
+    match str(user_id) in users_id_list:
         case False:
             await message.answer('В доступе отказано')
         case True:
