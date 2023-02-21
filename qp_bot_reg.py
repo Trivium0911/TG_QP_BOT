@@ -62,7 +62,7 @@ async def start(message: types.Message):
     if not (str(user_id) in users_id_list):
         await message.answer('В доступе отказано')
     else:
-        if not(check_user(user_id=message.from_user.id)):
+        if not (check_user(user_id=message.from_user.id)):
             await message.answer("Это твой первый визит. "
                                  "Давай-ка зарегистрируемся",
                                  reply_markup=get_register_kb())
@@ -117,7 +117,7 @@ async def get_name(message: types.Message, state: FSMContext) -> None:
         data["email"] = message.text
     await RegisterStatesGroup.next()
     await message.reply("Пожалуйста, введите номер телефона:"
-                        "(без +375 и пробелов)",
+                        "(без +375, знаков тире и пробелов)",
                         reply_markup=get_cancel_kb())
 
 
