@@ -14,11 +14,10 @@ async def start_db() -> None:
 async def create_user(user_id: str) -> None:
     user = cur.execute("SELECT 1 FROM users "
                        "WHERE user_id == '{}'".format(user_id)).fetchone()
-    match user:
-        case None:
-            cur.execute("INSERT INTO users VALUES(?,?,?,?,?)",
-                        (user_id, '', '', '', ''))
-            db.commit()
+    if not user:
+        cur.execute("INSERT INTO users VALUES(?,?,?,?,?)",
+                    (user_id, '', '', '', ''))
+        db.commit()
 
 
 def get_user_info(user_id: str) -> list:
@@ -39,9 +38,9 @@ async def edit_profile(state: FSMContext, user_id: str) -> None:
                     "captain_name = '{}', "
                     "email = '{}', phone = '{}' "
                     "WHERE user_id == '{}'".format(
-            data['command_name'], data['captain_name'],
-            data['email'], data['phone'], user_id)
-        )
+                        data['command_name'], data['captain_name'],
+                        data['email'], data['phone'], user_id)
+                    )
         db.commit()
 
 
