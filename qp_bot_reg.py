@@ -36,7 +36,7 @@ WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=3001)
 
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher(bot=bot, storage=MemoryStorage())
 
 
 async def on_startup(dispatcher):
