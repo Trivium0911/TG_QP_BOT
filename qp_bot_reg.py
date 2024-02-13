@@ -34,7 +34,7 @@ WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
 
 # webserver settings
 WEBAPP_HOST = '0.0.0.0'
-WEBAPP_PORT = os.getenv('PORT', default=3001)
+WEBAPP_PORT = int(os.getenv('PORT', default=3001))
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
@@ -193,9 +193,9 @@ async def make_form(message: types.Message):
         for line in file:
             if 'Актуальные игры:' in line:
                 continue
-            res += pre + f"{line.strip()}:\n" + nums
-    res += check_b_days(b_days)
+            res += pre + f"{line.strip()}:\n\n\n" + nums
     await message.answer(res)
+    await message.answer(check_b_days(b_days))
     res = ''
 
 
