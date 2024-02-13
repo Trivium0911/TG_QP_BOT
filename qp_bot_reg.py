@@ -3,7 +3,8 @@ from database import start_db, edit_profile, create_user, check_user, \
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from keyboards import get_main_kb, get_register_kb, \
     get_cancel_kb, get_register_check_kb
-from main import get_actual_games, get_ids, post_inf
+from main import get_actual_games, get_ids, post_inf, check_b_days, \
+    b_days
 from aiogram.utils.executor import start_webhook
 from aiogram.dispatcher import FSMContext
 from states import RegisterStatesGroup
@@ -193,8 +194,8 @@ async def make_form(message: types.Message):
             if 'Актуальные игры:' in line:
                 continue
             res += pre + f"{line.strip()}:\n" + nums
-
     await message.answer(res)
+    await message.answer(check_b_days(b_days))
     res = ''
 
 

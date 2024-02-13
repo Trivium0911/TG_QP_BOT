@@ -1,13 +1,31 @@
 from dataclasses import dataclass
+from bs4 import BeautifulSoup
+import datetime
+import requests
 import json
 import time
-from bs4 import BeautifulSoup
-import requests
 import os
 
 URL = os.getenv('URL')
 URL_POST = os.getenv('URL_POST')
 stop_list = ["новички", 'полуфинал', 'финал', 'сезона игр']
+b_days = {
+    "Надя": "11.03",
+    "Дима Кужелевский": "09.04",
+    "Антон": "12.04",
+    "Натали": "04.10",
+    "Саша Юшкевич": "09.30",
+    "Дима Бориков": "02.10",
+    "Катя Фалюк": "11.23",
+    "Строгий": "07.12",
+    "Кирилл": "09.24",
+    "Бандэрос": "12.22",
+    "Гребень": "12.25",
+    "Игорёк": "07.07",
+    "Марина": "06.16",
+    "Елена": "11.08",
+    "Johny": "02.16",
+}
 
 
 @dataclass
@@ -72,6 +90,18 @@ def post_inf(url: str, lst: list, user_info: list) -> None:
         res.append(response.json())
     with open('reginfo.json', 'w') as file:
         json.dump(res, file, indent=4, ensure_ascii=False)
+
+
+def check_b_days(dct: dict) -> str:
+    today = datetime.date.today()
+    res = ""
+    for k, v in dct.items():
+        date_m, date_d = [int(i) for i in v.split(".")]
+        b_day_date = datetime.date(today.year, date_m, date_d)
+        delta = b_day_date - today
+        if 0 <= delta.days <= 14:
+            res += f"Напоминаю, скоро ДР у {k} - {v}\n"
+    return res
 
 
 def main():
