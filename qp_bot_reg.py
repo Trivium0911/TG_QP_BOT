@@ -193,8 +193,8 @@ async def make_form(message: types.Message):
         for line in file:
             if 'Актуальные игры:' in line:
                 continue
-            res += pre + f"{line.strip()}:\n\n" + nums + "\n\n"
-    res += check_b_days(b_days)
+            res += pre + f"{line.strip()}:\n\n" + nums
+    res += "\n\n" + check_b_days(b_days)
     await message.answer(res)
     res = ''
 
