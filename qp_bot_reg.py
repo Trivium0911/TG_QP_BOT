@@ -115,7 +115,8 @@ async def get_name(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(state=RegisterStatesGroup.email)
 async def get_name(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
-        data["email"] = message.text
+        phone = message.text
+        data["email"] = phone[:2] + ' ' + phone[2:]
     await RegisterStatesGroup.next()
     await message.reply("Пожалуйста, введите номер телефона:"
                         "(без +375, знаков тире и пробелов)",
