@@ -125,7 +125,9 @@ async def get_name(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(state=RegisterStatesGroup.phone)
 async def get_name(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
-        data['phone'] = message.text
+        phone = message.text
+        data['phone'] = '+375 ' + phone[:2] + ' ' + phone[2:5] + '-' + \
+                        phone[5:7] + '-' + phone[7:]
     await RegisterStatesGroup.next()
     await message.answer("Пожалуйста, проверьте правильность "
                          "введенных данных. Если всё верно, "
@@ -133,7 +135,7 @@ async def get_name(message: types.Message, state: FSMContext) -> None:
                          f"Команда:   {data['command_name']} \n"
                          f"Капитан:   {data['captain_name']}\n"
                          f"Email:   {data['email']}\n"
-                         f"Телефон:  +375 {data['phone']}",
+                         f"Телефон:   {data['phone']}",
                          reply_markup=get_register_check_kb())
 
 
